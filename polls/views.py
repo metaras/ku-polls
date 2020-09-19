@@ -36,31 +36,21 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    try:
-        select_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        select_choice.votes += 1
-        select_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
-def access_period(request, question_id):
-    """
-    check that the question was in the polling period or not.
-    If it was in the period visitor will be able to vote on a poll,
-    if not visitor will be redirect to the poll index page with error
-    message.
-    """
-    question = get_object_or_404(Question, pk=question_id)
     if question.can_vote():
-        return vote(request, question_id)
+        try:
+            select_choice = question.choice_set.get(pk=request.POST['choice'])
+        except (KeyError, Choice.DoesNotExist):
+            return render(request, 'polls/detail.html', {
+                'question': question,
+                'error_message': "You didn't select a choice.",
+            })
+        else:
+            select_choice.votes += 1
+            select_choice.save()
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+            return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
     else:
         messages.error(request, f"This poll was not in the polling period.")
         return redirect('polls:index')

@@ -137,12 +137,12 @@ class QuestionModelTests(TestCase):
         recent_question = Question(pub_date=time, end_date=time + datetime.timedelta(days=30))
         self.assertIs(recent_question.can_vote(), True)
 
-    def test_can_vote_after_enddate(self):
+    def test_can_vote_after_end_date(self):
         """
         can_vote returns False if time was after end date.
         """
-        time = timezone.now() - datetime.timedelta(days=2)
-        recent_question = Question(pub_date=time, end_date=time + datetime.timedelta(days=30))
+        time = timezone.now() + datetime.timedelta(days=-2)
+        recent_question = Question(pub_date=time, end_date=time + datetime.timedelta(days=-1))
         self.assertIs(recent_question.can_vote(), False)
 
 
