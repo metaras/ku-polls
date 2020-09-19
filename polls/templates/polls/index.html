@@ -18,7 +18,7 @@
 {% if latest_question_list %}
     <ul style="color: darkblue">
     {% for question in latest_question_list %}
-        <li><a style="color: darkblue" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <li><a style="color: white" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
         <li><a style="color: darkblue" href="{% url 'polls:results' question.id %}">Result</a></li>
     {% endfor %}
     </ul>
