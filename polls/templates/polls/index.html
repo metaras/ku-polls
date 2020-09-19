@@ -1,15 +1,26 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<ul style="color: darkblue">
+    <h1>
+        Index Polls:
+    </h1>
+</ul>
 
 <ul style="color: darkblue">
         <p> Index polls </p>
 </ul>
 
 {% if messages %}
+<<<<<<< HEAD
 <ul class="messages" style="color: darkblue">
     {% for msg in messages %}
     <a class="{{msg.tags}}"> Error message: {{ msg }}</a>
+=======
+<ul class="messages" style="color: royalblue">
+    {% for msg in messages %}
+    <a class="{{msg.tags}}">Error message: {{ msg }}</a>
+>>>>>>> iteration2
     {% endfor %}
 </ul>
 {% endif %}
@@ -17,8 +28,13 @@
 {% if latest_question_list %}
     <ul style="color: darkblue">
     {% for question in latest_question_list %}
+<<<<<<< HEAD
         <li><a style="color: darkblue " href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
         <li><a style="color: darkblue " href="{% url 'polls:results' question.id %}">Result</a></li>
+=======
+        <li><a style="color: white" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <li><a style="color: darkblue" href="{% url 'polls:results' question.id %}">Result</a></li>
+>>>>>>> iteration2
     {% endfor %}
     </ul>
 {% else %}
