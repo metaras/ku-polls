@@ -42,5 +42,5 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
 
     def __str__(self):
-        """Returns choice for vote in each question."""
+        """Sent the choice for vote in each question."""
         return self.choice_text

@@ -13,9 +13,11 @@ def create_question(question_text, days):
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
     """
+
     time = timezone.now() + datetime.timedelta(days=days)
     end_time = timezone.now()+datetime.timedelta(days=30)
-    return Question.objects.create(question_text=question_text, pub_date=time, end_date=end_time)
+    return Question.objects.create(question_text=question_text,
+                                   pub_date=time, end_date=end_time)
 
 
 class QuestionIndexViewTests(TestCase):
@@ -29,7 +31,7 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerysetEqual(response.context['latest_question_list'], [])
 
     def test_past_question(self):
-        """Questions with a pub_date in the past are displayed on the index page."""
+        """pub_date in the past question are displayed on the index page."""
         create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
@@ -38,7 +40,7 @@ class QuestionIndexViewTests(TestCase):
         )
 
     def test_future_question(self):
-        """Questions with a pub_date in the future aren't displayed on the index page."""
+        """pub_date in the future question not displayed on the index page."""
         create_question(question_text="Future question.", days=30)
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "No polls are available.")
@@ -84,7 +86,8 @@ class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_recent_question(self):
         """Returns True for questions whose pub_date is within the last day."""
-        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        time = timezone.now() - datetime.timedelta(hours=23,
+                                                   minutes=59, seconds=59)
         recent_question = Question(pub_date=time,
                                    end_date=time+datetime.timedelta(days=30))
         self.assertIs(recent_question.was_published_recently(), True)

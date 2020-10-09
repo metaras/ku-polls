@@ -38,7 +38,7 @@ class ResultsView(generic.DetailView):
 
 
 def vote(request, question_id):
-    """The work when vote."""
+    """Check if question in the period count the vote."""
     question = get_object_or_404(Question, pk=question_id)
     if question.can_vote():
         try:
@@ -54,7 +54,8 @@ def vote(request, question_id):
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
-            return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            return HttpResponseRedirect(reverse('polls:results',
+                                                args=(question.id,)))
     else:
-        messages.error(request, f"This poll was not in the polling period.")
+        messages.error(request, "This poll was not in the polling period.")
         return redirect('polls:index')
