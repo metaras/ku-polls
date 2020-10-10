@@ -17,7 +17,11 @@ class Question(models.Model):
         return self.question_text
 
     def was_published_recently(self):
-        """Check that question was published recently or not."""
+        """Check that question was published recently or not.
+
+        Returns:
+            True if in the vote period. False for otherwise.
+        """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
     was_published_recently.admin_order_field = 'pub_date'
@@ -25,12 +29,20 @@ class Question(models.Model):
     was_published_recently.short_description = 'Published recently?'
 
     def is_published(self):
-        """Check the published time."""
+        """Check the published time.
+
+        Returns:
+            True if pub_date lest than now. Otherwise False.
+        """
         now = timezone.now()
         return now >= self.pub_date
 
     def can_vote(self):
-        """Check time period for voting."""
+        """Check time period for voting.
+
+        Returns:
+            True if now in the vote period. Otherwise False.
+        """
         now = timezone.now()
         return self.pub_date <= now <= self.end_date
 
