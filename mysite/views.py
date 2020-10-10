@@ -1,3 +1,4 @@
+"""Module for control the web application flow."""
 from django.shortcuts import redirect
 
 

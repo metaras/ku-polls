@@ -1,3 +1,4 @@
+"""Module for testing each function."""
 import datetime
 
 from django.test import TestCase
@@ -9,11 +10,11 @@ from .models import Question
 
 def create_question(question_text, days):
     """
-    Create a question with the given `question_text` and published the
-    given number of `days` offset to now (negative for questions published
+    Create a question with the given `question_text` and published date.
+
+    The given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
     """
-
     time = timezone.now() + datetime.timedelta(days=days)
     end_time = timezone.now()+datetime.timedelta(days=30)
     return Question.objects.create(question_text=question_text,

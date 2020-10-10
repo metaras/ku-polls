@@ -1,3 +1,4 @@
+"""Models for create Question and choice in the database."""
 import datetime
 
 from django.db import models

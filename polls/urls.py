@@ -1,3 +1,4 @@
+"""Module for match the path with its function."""
 from django.urls import path
 from . import views
 
