@@ -2,10 +2,13 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 <ul style="color: darkblue">
-    <h3>Welcome {{ user.first_name }}</h3>
     <h1>
         Index Polls:
     </h1>
+</ul>
+
+<ul style="color: darkblue">
+        <p> Index polls </p>
 </ul>
 
 {% if messages %}
@@ -29,7 +32,3 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
-
-<p>
-    <a href="{% url 'logout' %}">Logout</a>
-</p>
