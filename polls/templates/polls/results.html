@@ -27,6 +27,7 @@
 
     </tbody>
 </table>
-
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+{% if question.can_vote %}
+    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+{% endif %}
 <input type="button" value="Back to list of Polls" onclick= "location.href = '{% url 'polls:index' %}'">

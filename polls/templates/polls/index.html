@@ -1,8 +1,18 @@
 {% load static %}
 
+<style>
+    .hello-msg{
+        front-size: 18px;
+        color: darkblue;
+        margin-right: 20px;
+    }
+</style>
+
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 <ul style="color: darkblue">
-    <h3>Welcome {{ user.first_name }}</h3>
+    <span class="hello-msg">Hello, {{ request.user }}</span>
+    <span class="hello-msg"><a href="{% url 'polls:logout' %}">Logout</a> </span>
+
     <h1>
         Index Polls:
     </h1>
@@ -17,19 +27,17 @@
     {% endfor %}
     {% endfor %}
 </ul>
-    {% endif %}
+{% endif %}
 
 {% if latest_question_list %}
     <ul style="color: darkblue">
     {% for question in latest_question_list %}
         <li><a style="color: darkblue " href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        <li><a style="color: darkblue " href="{% url 'polls:results' question.id %}">Result</a></li>
+        <a style="color: darkblue " href="{% url 'polls:results' question.id %}">Result</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
 
-<p>
-    <a href="{% url 'logout' %}">Logout</a>
-</p>
+

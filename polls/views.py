@@ -5,9 +5,44 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth import authenticate, logout, login
 
 from .models import Question, Choice
+from .forms import CreateUserForm
 
+
+def registration_page(request):
+    form = CreateUserForm()
+
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, 'Account was create for ' + user)
+            return redirect('polls:login')
+
+    context = {'form': form}
+    return render(request, 'registration/registration.html', context)
+
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('polls:index')
+        else:
+            messages.info(request, 'Username or Password is incorrect')
+
+    context = {}
+    return render(request, 'registration/login.html', context)
+
+def logged_out(request):
+    logout(request)
+    return redirect('polls:login')
 
 class IndexView(generic.ListView):
     """The index page views."""
