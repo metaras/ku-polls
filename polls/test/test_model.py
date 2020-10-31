@@ -8,17 +8,6 @@ from django.utils import timezone
 from polls.models import Question
 
 
-def create_question(question_text, days):
-    """
-    Create a question with the given `question_text` and published date.
-
-    The given number of `days` offset to now (negative for questions published
-    in the past, positive for questions that have yet to be published).
-    """
-    time = timezone.now() + datetime.timedelta(days=days)
-    end_time = timezone.now() + datetime.timedelta(days=30)
-    return Question.objects.create(question_text=question_text, pub_date=time, end_date=end_time)
-
 class QuestionModelTests(TestCase):
     """Test the question model and time period."""
 
