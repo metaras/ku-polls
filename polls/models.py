@@ -53,8 +53,13 @@ class Choice(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
 
     def __str__(self):
         """Sent the choice for vote in each question."""
         return self.choice_text
+
+class Vote(models.Model):
+    """Vote of each user on each question."""
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, default=1)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

@@ -20,7 +20,7 @@
             {{ choice.choice_text }}
         </td>
         <td style="text-align: right">
-            {{ choice.votes }}
+            {{ choice.vote_set.count }}
         </td>
     </tr>
     {% endfor %}
