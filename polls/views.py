@@ -138,6 +138,8 @@ def vote(request, question_id):
                 else:
                     vote.choice = select_choice
                     vote.save()
+                    logger.info('Vote success: Vote as {} at {}'.format(request.user.username,
+                                                                          request.META.get('REMOTE_ADDR')))
                     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
             else:
                 select_choice += 1
