@@ -129,7 +129,7 @@ def vote(request, question_id):
                                                          'error_message': "You didn't select a choice."})
         else:
             if not Vote.objects.filter(question=question, user=request.user).exists():
-                vote = Vote.objects.create(question=question, user=request.user)
+                vote = Vote.objects.create(question=question, user=request.user, choice=select_choice)
                 vote.save()
             elif Vote.objects.filter(question=question, user=request.user).exists():
                 vote = Vote.objects.get(question=question, user=request.user)
